@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+// import PictureContainer from "./pages/pictureContainer";
+// import SearchContainer from "./pages/searchContainer";
+// import UploadContainer from "./pages/uploadContainer";
 
 function App() {
+  const PictureContainer = lazy(() => import("./pages/pictureContainer"));
+  const SearchContainer = lazy(() => import("./pages/searchContainer"));
+  const UploadContainer = lazy(() => import("./pages/uploadContainer"));
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <header className="App-header">
+          <h1>CATS_IMAGE</h1>
+        </header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">HOME</Link>
+            </li>
+            <li>
+              <Link to="/search">Search</Link>
+            </li>
+            <li>
+              <Link to="/upload">Upload</Link>
+            </li>
+          </ul>
+        </nav>
+        <Suspense fallback={<div>loading...</div>}>
+          <Routes>
+            <Route path="/" element={<PictureContainer />} />
+            <Route path="/search" element={<SearchContainer />} />
+            <Route path="/upload" element={<UploadContainer />} />
+          </Routes>
+        </Suspense>
+      </Router>
     </div>
   );
 }
