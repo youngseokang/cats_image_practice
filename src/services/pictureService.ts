@@ -8,11 +8,11 @@ const useCatPictures = () => {
     ["get_cat_pictures"],
     async ({ pageParam = 1 }) => {
       const { data } = await useAxios.get(
-        `/images/search?limit=${pageParam * 5}`
+        `/images/search?page=${pageParam}&limit=5`
       );
       return {
         data,
-        nextId: Math.min(pageParam + 1, 5),
+        nextId: pageParam + 1,
         previousId: Math.max(0, pageParam - 1),
       };
     },

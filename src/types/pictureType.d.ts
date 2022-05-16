@@ -12,6 +12,11 @@ interface pictureItemType {
   width: number;
 }
 
+interface pictureItemProps {
+  data: pictureItemType;
+  downloadCatImage: (fileName: string, filePath: string) => void;
+}
+
 interface useCatPicturesResult {
   data: Array<pictureItemType>;
   nextId: number;
