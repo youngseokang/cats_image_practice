@@ -1,3 +1,4 @@
+/* pictureContainer 관련 */
 interface pictureItemExpType {
   id: number;
   name: string;
@@ -21,4 +22,10 @@ interface useCatPicturesResult {
   data: Array<pictureItemType>;
   nextId: number;
   previousId: number;
+}
+
+/* uploadContainer 관련 */
+interface uploadFileTypes {
+  id: number;
+  object: File;
 }

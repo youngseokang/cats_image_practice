@@ -1,7 +1,13 @@
 import React from "react";
+import DragDropBox from "../components/uploadContainer/dragDropBox";
 
 const UploadContainer = () => {
-  return <div>uploadContainer</div>;
+  return (
+    <div>
+      {" "}
+      <DragDropBox />
+    </div>
+  );
 };
 
 export default UploadContainer;
