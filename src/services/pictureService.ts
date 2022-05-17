@@ -8,7 +8,7 @@ const useCatPictures = () => {
     ["get_cat_pictures"],
     async ({ pageParam = 1 }) => {
       const { data } = await useAxios.get(
-        `/images/search?page=${pageParam}&limit=5`
+        `/images/search?page=${pageParam}&limit=10`
       );
       return {
         data,

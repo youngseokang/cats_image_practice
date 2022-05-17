@@ -1,5 +1,5 @@
 import React from "react";
-import DragDropBox from "../components/uploadContainer/dragDropBox";
+import DragDropBox from "../common/components/uploadContainer/dragDropBox";
 
 const UploadContainer = () => {
   return (

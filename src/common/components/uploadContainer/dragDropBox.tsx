@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import "../../styles/dragDropBox.css";
+import "../../../styles/dragDropBox.css";
 
 function DragDropBox() {
   // drag 하는중인지 아닌지 확인할 변수 isDragging

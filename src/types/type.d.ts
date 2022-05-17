@@ -13,9 +13,19 @@ interface pictureItemType {
   width: number;
 }
 
+interface localPictureItemType {
+  name: string;
+  url: string;
+}
+
 interface pictureItemProps {
   data: pictureItemType;
   downloadCatImage: (fileName: string, filePath: string) => void;
+}
+
+interface localPictureItemProps {
+  data: localPictureItemType;
+  downloadLocalCatImage: (fileName: string) => void;
 }
 
 interface useCatPicturesResult {
