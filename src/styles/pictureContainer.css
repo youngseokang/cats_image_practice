@@ -1,0 +1,13 @@
+.pictureContainer {
+  display: grid;
+  grid-template-rows: 30px 1fr;
+  grid-auto-rows: 1fr;
+  row-gap: 10px;
+}
+
+.pictureItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

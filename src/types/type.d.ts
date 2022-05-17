@@ -36,6 +36,6 @@ interface useCatPicturesResult {
 
 /* uploadContainer 관련 */
 interface uploadFileTypes {
-  id: number;
-  object: File;
+  preview: string | ArrayBuffer | null;
+  file: File | null;
 }

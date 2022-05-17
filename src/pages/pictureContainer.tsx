@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import useAxios from "../hooks/useAxios";
+import "../styles/pictureContainer.css";
 
 import test1 from "../common/image/test1.jpg";
 import test2 from "../common/image/test2.jpg";
@@ -102,7 +103,7 @@ const PictureContainer = () => {
   }, [inView, fetchNextPage]);
 
   return (
-    <div>
+    <div className="pictureContainer">
       <h2>pictureContainer</h2>
       {localPictures.map((pic, idx) => {
         return (
