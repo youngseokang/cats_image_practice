@@ -6,6 +6,8 @@ import {
   ChangeEvent,
   MouseEventHandler,
 } from "react";
+import uploadService from "../../../services/uploadService";
+import LoadingIndicator from "../loadingIndicator";
 
 function DragDropBox() {
   // drag 하는중인지 아닌지 확인할 변수 isDragging
@@ -17,8 +19,11 @@ function DragDropBox() {
   });
   // drag 감지하는 ref
   const dragRef = useRef<HTMLLabelElement | null>(null);
+  // useMutation 관련
+  const formdata = new FormData();
+  const { mutate, status, reset } = uploadService.useUploadCatPictures(formdata);
 
-  // TODO: 파일 관련
+  // TODO: 파일 업로드 관련
   const onChangeFiles = (e: ChangeEvent<HTMLInputElement> | any) => {
     let currentFile: File | null = null;
     const reader = new FileReader();
@@ -101,13 +106,56 @@ function DragDropBox() {
         file: null,
       };
     });
+    reset();
   };
 
-  console.log(file);
+  // TODO: 사진 업로드
+  const uploadPicture = async () => {
+    formdata.append("file", file.file as Blob, "file");
+    formdata.append("sub_id", "");
+
+    mutate();
+  };
+
+  // TODO: 보여질 버튼 
+  const buttonStatus = (status: string) => {
+    switch (status) {
+      case ("error"):
+        return (
+          <button
+            className="uploadFileSubmit"
+            type="button"
+            onClick={resetUpload}
+          >
+            에러
+          </button>)
+      case ("loading"):
+        return (
+          <LoadingIndicator />
+        )
+      case ("success"):
+        return (
+          <button
+            className="uploadFileSubmit"
+            type="button"
+            onClick={uploadPicture}
+          >
+            업로드 하기
+          </button>)
+      default:
+        return (
+          <button
+            className="uploadFileSubmit"
+            type="button"
+            onClick={uploadPicture}
+          >
+            업로드 하기
+          </button>)
+    }
+  }
 
   useEffect(() => {
     initDragEvents();
-
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
 
@@ -123,7 +171,7 @@ function DragDropBox() {
         <label
           className={isDragging ? "dragDropBox active" : "dragDropBox"}
           htmlFor="fileUpload"
-          ref={file.file === null ? dragRef : null}
+          ref={dragRef}
         >
           이미지 업로드
         </label>
@@ -143,47 +191,13 @@ function DragDropBox() {
                 </div>
               </div>
             </div>
-            <button className="uploadFileSubmit" type="button">
-              업로드 하기
-            </button>
+            {buttonStatus(status)}
           </>
         ) : (
-          <div className="uploadFileWrapper">업로드한 사진이 없습니다.</div>
+          <div className="uploadFileWrapper">
+            <div className="uploadFile">업로드한 사진이 없습니다.</div>
+          </div>
         )}
-        {/* {file.file === null ? (
-          <>
-            <input
-              type="file"
-              id="fileUpload"
-              onChange={onChangeFiles}
-              accept="image/jpg, image/jpeg, image/png"
-            />
-            <label
-              className={isDragging ? "dragDropBox active" : "dragDropBox"}
-              htmlFor="fileUpload"
-              ref={file.file === null ? dragRef : null}
-            >
-              이미지 업로드
-            </label>
-            <div className="uploadFileWrapper">
-              <div className="uploadFile">
-                <img
-                  src={file.preview as string}
-                  alt={(file.file as File).name}
-                />
-                <div className="uploadFileInfo">
-                  <p>{(file.file as File).name}</p>
-                  <button type="button" onClick={resetUpload}>
-                    &times;
-                  </button>
-                </div>
-              </div>
-            </div>
-            <button className="uploadFileSubmit" type="button">
-              업로드 하기
-            </button>
-          </>
-        ) : null} */}
       </div>
     </>
   );
