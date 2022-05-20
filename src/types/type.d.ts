@@ -41,5 +41,5 @@ interface uploadFileTypes {
 }
 
 interface test {
-  working2: boolean;
+  working2: null;
 }
