@@ -106,6 +106,7 @@ function DragDropBox() {
         file: null,
       };
     });
+    console.log("리셋함!")
     reset();
   };
 
@@ -127,7 +128,7 @@ function DragDropBox() {
             type="button"
             onClick={resetUpload}
           >
-            에러
+            에러 (이 text는 일부러 merge error내려고 추가함)
           </button>)
       case ("loading"):
         return (
@@ -194,9 +195,7 @@ function DragDropBox() {
             {buttonStatus(status)}
           </>
         ) : (
-          <div className="uploadFileWrapper">
-            <div className="uploadFile">업로드한 사진이 없습니다.</div>
-          </div>
+          null
         )}
       </div>
     </>
