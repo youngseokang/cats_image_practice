@@ -134,8 +134,8 @@ const PictureContainer = () => {
           isFetchingNextPage
             ? "Loading more..." // isFetchingNextPage === true
             : hasNextPage
-            ? "Load Newer" // isFetchingNextPage === false && hasNextPage === true
-            : "Nothing more to load" // isFetchingNextPage === false && hasNextPage === false
+              ? "Load Newer" // isFetchingNextPage === false && hasNextPage === true
+              : "Nothing more to load" // isFetchingNextPage === false && hasNextPage === false
         }
       </button>
     </div>

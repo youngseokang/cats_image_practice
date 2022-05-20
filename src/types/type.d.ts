@@ -41,5 +41,6 @@ interface uploadFileTypes {
 }
 
 interface test {
-  working2: null;
+  working2: undefined;
+  friday: boolean;
 }
