@@ -39,3 +39,7 @@ interface uploadFileTypes {
   preview: string | ArrayBuffer | null;
   file: File | null;
 }
+
+interface test {
+  working: boolean;
+}
