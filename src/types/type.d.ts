@@ -42,5 +42,6 @@ interface uploadFileTypes {
 
 interface test {
   working2: undefined;
-  friday: boolean;
+  payday: boolean;
+  tryingRebase: boolean;
 }
