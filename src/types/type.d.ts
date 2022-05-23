@@ -40,8 +40,7 @@ interface uploadFileTypes {
   file: File | null;
 }
 
-interface test {
-  working2: undefined;
-  payday: boolean;
-  tryingRebase: boolean;
+/* excelDownloadService 관련 */
+interface downloadPDFTypes {
+  data: ArrayBuffer | BlobPart
 }

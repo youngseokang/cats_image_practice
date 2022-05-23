@@ -70,32 +70,7 @@ const PictureContainer = () => {
   };
 
   const downloadLocalCatImage = (fileName: string) => {
-    const domain = window.location.origin;
-    const downloadPath = domain + "/download/image/" + fileName + ".jpg";
-    axios
-      .get(downloadPath, {
-        responseType: "blob",
-      })
-      .then((result) => {
-        // console.log(result); // {... data: Blob{size: .. ,type: 'image/jpeg'}, ...}
-        // const tempBlob = new Blob([result.data], { type: result.data.type });
-        // console.log(tempBlob); // Blob{size: .., type: 'image/jpeg}
-        const downloadUrl = window.URL.createObjectURL(
-          new Blob([result.data], { type: result.data.type })
-        );
-        const downloadLink = document.createElement("a");
-        downloadLink.href = downloadUrl;
-        downloadLink.setAttribute("download", fileName);
-        document.body.appendChild(downloadLink);
-        console.log();
-        downloadLink.click();
-        downloadLink.remove();
-        window.URL.revokeObjectURL(downloadUrl);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("나중에 시도해 주세요.");
-      });
+    pictureService.useDownloadLocalCatImage(fileName)
   };
 
   useEffect(() => {
