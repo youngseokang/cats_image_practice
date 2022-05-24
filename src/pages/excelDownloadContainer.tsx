@@ -1,9 +1,7 @@
 import { saveAs } from 'file-saver'
-import { useState } from 'react'
 import excelDownloadService from '../services/excelDownloadService'
 
 function ExcelDownloadContainer() {
-    const [excelState, setExcelState] = useState([])
     // TODO: PDF 다운로드
     // *1. file-saver 사용
     const downloadPDF1 = (fileName: string) => {

@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import CreateContainer from "./pages/createContainer";
 import ExcelDownloadContainer from "./pages/excelDownloadContainer";
 // import PictureContainer from "./pages/pictureContainer";
 // import SearchContainer from "./pages/searchContainer";
@@ -27,7 +28,10 @@ function App() {
               <Link to="/upload">Upload</Link>
             </li>
             <li>
-              <Link to="/excelDownload">download Excel</Link>
+              <Link to="/download">download</Link>
+            </li>
+            <li>
+              <Link to="/create">Create</Link>
             </li>
           </ul>
         </nav>
@@ -36,7 +40,8 @@ function App() {
             <Route path="/" element={<PictureContainer />} />
             <Route path="/search" element={<SearchContainer />} />
             <Route path="/upload" element={<UploadContainer />} />
-            <Route path="/excelDownload" element={<ExcelDownloadContainer />} />
+            <Route path="/download" element={<ExcelDownloadContainer />} />
+            <Route path="/create" element={<CreateContainer />} />
           </Routes>
         </Suspense>
       </Router>
