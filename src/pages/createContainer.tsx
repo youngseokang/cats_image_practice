@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx'
 import FileSaver from 'file-saver';
 import { CSVLink } from 'react-csv';
-import { CSSProperties } from 'react';
+import { CSSProperties, useMemo } from 'react';
 
 function CreateContainer() {
     // API로 받아오는 정보로 table 만듬
@@ -64,6 +64,28 @@ function CreateContainer() {
             orderStatus: `배송 완료`, // 진행 상태
         },
     ];
+    // TODO: 깊은 복사 함수
+    const handleDeepCopy = (target: any) => { // 다 들어올 수 있어서 any
+        let result: Array<any> | { [key: string]: any }, value: any, key: string;
+        if (typeof target !== 'object' || target === null) return target;
+
+        result = Array.isArray(target) ? [] : {};
+
+        if (Array.isArray(result)) { // 값을 담을 공간이 배열이라면
+            target.map((el: any) => result.push(handleDeepCopy(el)));
+        } else { // 값을 담을 공간이 객체라면
+            for (key in target) {
+                value = target[key];
+                result[key] = handleDeepCopy(value);
+            }
+        }
+        return result;
+    }
+
+    const JSONdataCopy: Array<orderItemType> = useMemo(() => handleDeepCopy(JSONdata), []);
+    console.log(`JSONdata === JSONdataCopy: ${JSONdata === JSONdataCopy}, 
+        JSONdata[0] === JSONdataCopy[0]: ${JSONdata[0] === JSONdataCopy[0]} `) // 깊은 복사 성공
+
     const headers = [
         { label: "순번", key: "id" },
         { label: "주문일", key: "orderDate" },
@@ -122,32 +144,32 @@ function CreateContainer() {
 
     // TODO: Table -> excel (react-csv 사용)
     const createAndDownload3 = (tempCSVdata: Array<orderItemType>, fileName: string) => {
-        // ! el.statement.map이 불가능하다는 에러 발생
-        // const modifiedCSVdata = tempCSVdata.map((el) => {
-        //     if (el.statement) {
-        //         let modStatement: string[] | string = (el.statement as Array<statementType>).map((e) => {
-        //             const { option, price } = e;
-        //             return `${option} ${price},`
-        //         })
-        //         modStatement = modStatement.reduce((acc, cur) => acc += cur);
-        //         el.statement = modStatement.slice(0, modStatement.length - 1);
-        //     }
-        //     if (el.etc) {
-        //         let modEtc: string[] | string = (el.etc as Array<etcType>).map((e) => {
-        //             const { item, amount } = e;
-        //             return `${item}: ${amount},`;
-        //         })
-        //         modEtc = modEtc.reduce((acc, cur) => acc += cur);
-        //         el.etc = modEtc.slice(0, modEtc.length - 1);
-        //     }
-        //     return el;
-        // })
+        // // ! el.statement.map이 불가능하다는 에러 발생 -> 깊은복사 / 얕은 복사 때문이였음. 해결완료
+        const modifiedCSVdata = tempCSVdata.map((el) => {
+            if (el.statement) {
+                let modStatement: string[] | string = (el.statement as Array<statementType>).map((e) => {
+                    const { option, price } = e;
+                    return `${option} ${price},`
+                })
+                modStatement = modStatement.reduce((acc, cur) => acc += cur);
+                el.statement = modStatement.slice(0, modStatement.length - 1);
+            }
+            if (el.etc) {
+                let modEtc: string[] | string = (el.etc as Array<etcType>).map((e) => {
+                    const { item, amount } = e;
+                    return `${item}: ${amount},`;
+                })
+                modEtc = modEtc.reduce((acc, cur) => acc += cur);
+                el.etc = modEtc.slice(0, modEtc.length - 1);
+            }
+            return el;
+        })
 
         return (
             <CSVLink
                 headers={headers}
-                // data={modifiedCSVdata}
-                data={tempCSVdata}
+                data={modifiedCSVdata}
+                // data={tempCSVdata}
                 filename={fileName}
                 target="_blank"
             >
@@ -165,7 +187,7 @@ function CreateContainer() {
         <div>
             <button onClick={() => { createAndDownload1(JSONdata, "test1") }}>JSON -&gt; Excel</button>
             <button onClick={() => { createAndDownload2("test2") }}>table -&gt; Excel (xlsx사용)</button>
-            <button>{createAndDownload3(JSONdata, "test3")}</button>
+            <button>{createAndDownload3(JSONdataCopy, "test3")}</button>
             <table id='orderTable'>
                 <thead style={tableStyle}>
                     <tr>
