@@ -85,3 +85,7 @@ interface tempOrderItemType extends orderItemType {
   statement: string; // 운임 내역
   etc: string; // 비고
 }
+
+interface printTableProps {
+  data: Array<orderItemType>
+}

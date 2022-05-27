@@ -1,8 +1,9 @@
 import ReactToPrint from "react-to-print"
-import { useRef, Component, CSSProperties } from "react";
+import { CSSProperties, useRef, useEffect } from "react";
+import PrintTable from "../common/components/printContainer/printTable";
 
 function PrintContainer() {
-    const printRef = useRef(null);
+    const ref = useRef<HTMLTableElement>(null);
     const JSONdata: Array<orderItemType> = [
         {
             id: 1,
@@ -62,6 +63,7 @@ function PrintContainer() {
             orderStatus: `배송 완료`, // 진행 상태
         },
     ];
+
     const tableStyle: CSSProperties = {
         backgroundColor: '#000',
         color: '#fff'
@@ -71,9 +73,10 @@ function PrintContainer() {
         <div>
             <ReactToPrint
                 trigger={() => <button>프린트하기</button>}
-                content={() => printRef.current}
+                content={() => ref.current}
             />
-            <table id='orderTable' ref={printRef}>
+            <PrintTable ref={ref} data={JSONdata} />
+            <table id='orderTable' ref={ref}>
                 <thead style={tableStyle}>
                     <tr>
                         <td>순번</td>
