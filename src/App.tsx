@@ -14,6 +14,7 @@ function App() {
   const ExcelDownloadContainer = lazy(() => import("./pages/excelDownloadContainer"));
   const CreateContainer = lazy(() => import("./pages/createContainer"));
   const PrintContainer = lazy(() => import("./pages/printContainer"));
+  const PdfContainer = lazy(() => import("./pages/pdfContainer"));
 
   return (
     <div className="App">
@@ -41,6 +42,9 @@ function App() {
             <li>
               <Link to="/print">Print</Link>
             </li>
+            <li>
+              <Link to="pdf">pdf</Link>
+            </li>
           </ul>
         </nav>
         <Suspense fallback={<div>loading...</div>}>
@@ -51,6 +55,7 @@ function App() {
             <Route path="/download" element={<ExcelDownloadContainer />} />
             <Route path="/create" element={<CreateContainer />} />
             <Route path="/print" element={<PrintContainer />} />
+            <Route path="/pdf" element={<PdfContainer />} />
           </Routes>
         </Suspense>
       </Router>
